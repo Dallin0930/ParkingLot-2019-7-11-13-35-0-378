@@ -1,21 +1,23 @@
 package com.thoughtworks.tdd;
 import com.thoughtworks.tdd.Ticket;
-public class Parkingboy {
+public class ParkingBoy {
 
     protected  ParkingLot parkinglot;
 
-    public Ticket parkCarToParkingLot(Car car) {          //停车获取票
-        Ticket ticket = new Ticket();
-        parkinglot.getTicketForcar().put(ticket,car);
-        return ticket;  
+    public ParkingBoy(ParkingLot parkingLot) {
+        this.parkinglot=parkingLot;
+    }
+
+    //停车得到票
+    public Ticket park(Car car) {
+     Ticket ticket = parkinglot.park(car);
+     return  ticket;
     }
 
 
-
-    public Car fetchCarWithTicket(Ticket ticket) {        //凭票取车(票错误/票过期/无票)
-        Car car=parkinglot.getTicketForcar().get(ticket);
+    //凭票取车
+    public Car fetch(Ticket ticket) throws FakeTicketException, UsedTicketException, NoTicketException {
+        Car car = parkinglot.fetch(ticket);
         return car;
     }
-
-
 }
