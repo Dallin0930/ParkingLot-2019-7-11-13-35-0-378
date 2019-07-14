@@ -54,6 +54,40 @@ public class ParkingBoy {
     }
 
 
-    //聪明男孩，停车找空闲最多放
+    //停车，聪明男孩，按空闲放
+    public ParkingLot smartPark(Car car) throws NoPositionException, CarHasBeenParkedException, NullCarException {
+        int bigCapacity = parkingLots.get(0).getParkingSpaceCount();
+        ParkingLot parkingLotMax = parkingLots.get(0);
+        for (ParkingLot parkingLot:parkingLots) {
+            if (parkingLot.getParkingSpaceCount()>bigCapacity){
+                bigCapacity = parkingLot.getParkingSpaceCount();
+                parkingLotMax = parkingLot;
+            }
+        }
+        Ticket ticket = parkingLotMax.park(car);
+        ticketParkinglot.put(ticket,parkingLotMax);
+        return parkingLotMax;
+    }
+
+
+    //停车，超级聪明男孩，按各自空闲率存放       问题：设置车库总容量，空闲车位数
+    public ParkingLot superPark(Car car) throws NoPositionException, CarHasBeenParkedException, NullCarException {
+        int bigCapacity = parkingLots.get(0).getParkingSpaceCount()/5;
+
+        ParkingLot parkingLotMax = parkingLots.get(0);    //默认该车库Max率
+
+        for (ParkingLot parkingLot:parkingLots) {
+            if (parkingLot.getParkingSpaceCount()/5>bigCapacity){       //问题
+                bigCapacity = parkingLot.getParkingSpaceCount();
+                parkingLotMax = parkingLot;
+            }
+        }
+        Ticket ticket = parkingLotMax.park(car);
+        ticketParkinglot.put(ticket,parkingLotMax);
+        return parkingLotMax;
+    }
+
+
+
 
 }

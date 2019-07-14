@@ -163,16 +163,51 @@ public void should_not_park_car_when_parking_space_count_is_less_than_0() throws
         assertSame(car6, fetchedCar);
     }
 
-    //
-    //@Test  //停车，聪明男孩，停车找空闲最多放
-//    public void should_not_park_car_when_parking_space_count_is_less_than_0_with_two_parkinglots() throws Exception, FakeTicketException {
-//
-//    }
 
-   // @Test   //停车，超级聪明男孩，找各自车库空闲率醉的的放
-//    public void should_park_car_when_super_boy_park_car(){
-//
-//    }
+    @Test  //停车，聪明男孩，停车找空闲最多放
+    public void should_not_park_car_when_parking_space_count_is_less_than_0_with_smart_parking_boy() throws Exception, FakeTicketException, NullCarException, CarHasBeenParkedException {
+        //given
+        Car car1 = new Car();
+        Car car2 = new Car();
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+        //set the bigger parking spaces
+        parkingLot2.setParkingSpaceCount(7);
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>();
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingLot2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        //when
+        parkingBoy.moreParkLots(car1);
+        ParkingLot parkingLotMax = parkingBoy.smartPark(car2);
+        //then
+        assertSame(parkingLot2, parkingLotMax);
+    }
+
+    @Test   //停车，超级聪明男孩，找各自车库空闲率最大的放
+    public void should_not_park_car_when_parking_space_count_is_less_than_0_with_super_parking_boy() throws Exception, FakeTicketException, NullCarException, CarHasBeenParkedException {
+        //given
+        Car car1 = new Car();
+        Car car2 = new Car();
+
+        ParkingLot parkingLot = new ParkingLot();
+        ParkingLot parkingLot2 = new ParkingLot();
+
+        parkingLot2.setParkingSpaceCount(7);
+
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>();
+
+        parkingLots.add(parkingLot);
+        parkingLots.add(parkingLot2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+
+
+        //when
+        parkingBoy.superPark(car1);
+        ParkingLot parkingLotMax = parkingBoy.superPark(car2);
+        //then
+        assertSame(parkingLot2, parkingLotMax);
+    }
 
 
 
