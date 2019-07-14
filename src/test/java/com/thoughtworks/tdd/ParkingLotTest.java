@@ -209,7 +209,56 @@ public void should_not_park_car_when_parking_space_count_is_less_than_0() throws
         assertSame(parkingLot2, parkingLotMax);
     }
 
+    @Test    ///经理添加男孩，获取男孩列表
+    public void should_return_parkingboys_when_manager_add_parkingboy(){
+        //given
+        Manager manager = new Manager();
+        ParkingBoy parkingBoy =new ParkingBoy();
+        //when
 
+        //then
+        assertSame(manager.getParkingBoys(),manager.addParkingboys(parkingBoy));
+    }
+
+
+    @Test /////经理1、管理停车场；  2、停车
+    public void should_return_parkingLots_when_manager_add_parkingLot() throws CarHasBeenParkedException, NullCarException, NoPositionException, FakeTicketException, UsedTicketException, NoTicketException {
+         //Given
+        Manager manager = new Manager();
+        ParkingLot parkingLot=new ParkingLot();
+
+        Car car = new Car();
+
+        //When
+         ArrayList<ParkingLot> result=manager.addParkingLot(parkingLot);
+
+         Ticket ticket =manager.moreParkLots(car);
+         Car fetchedCar=manager.fetchWithMoreParkingplots(ticket);
+        //Then
+        assertSame(manager.getParkingLots(),result);      //管理停车场
+        assertSame(car,fetchedCar);                       //停车取车
+    }
+
+
+
+    @Test   //经理命令，男孩未执行，返回错误信息
+    public void should_return_worong_message_when_parkingboy_failed_parking_car() throws CarHasBeenParkedException, NullCarException, NoPositionException {
+        //given
+        ParkingLot parkingLot = new ParkingLot();
+        parkingLot.setParkingSpaceCount(2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLot);
+        Manager manager = new Manager();
+        Car car = new Car();
+        Car car1 = new Car();
+        Car car2 = new Car();
+        //when
+        ArrayList<ParkingBoy> parkingBoys = manager.addParkingboys(parkingBoy);
+        parkingBoys.get(parkingBoys.size()-1).park(car);
+        parkingBoys.get(parkingBoys.size()-1).park(car1);
+        //then
+        //exist confusing problems
+        Assertions.assertThrows(Exception.class,()->parkingBoys.get(parkingBoys.size()-1).park(car2));
+    }
 
 }
 

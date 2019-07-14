@@ -17,6 +17,9 @@ public class ParkingBoy {
         this.parkingLots=parkingLot;
     }
 
+    public ParkingBoy() {
+
+    }
 
 
     //停车得到票
@@ -86,6 +89,8 @@ public class ParkingBoy {
         ticketParkinglot.put(ticket,parkingLotMax);
         return parkingLotMax;
     }
+
+
 
 
 
